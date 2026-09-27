@@ -1,4 +1,7 @@
 #include "tests.h"
+#include <iostream>
+using namespace std;
+
 
 // 练习1，实现库函数strlen
 int my_strlen(char *str) {
@@ -7,7 +10,17 @@ int my_strlen(char *str) {
      */
 
     // IMPLEMENT YOUR CODE HERE
-    return 0;
+    char *p = str;
+    int i = 0;
+    while (*p != '\0')
+    {
+        p += 1;
+        i++;
+    }
+    
+   
+    
+    return i;
 }
 
 
@@ -17,9 +30,54 @@ void my_strcat(char *str_1, char *str_2) {
      * 将字符串str_2拼接到str_1之后，我们保证str_1指向的内存空间足够用于添加str_2。
      * 注意结束符'\0'的处理。
      */
-
+     //   YOUR + SHE = YOURSHE
     // IMPLEMENT YOUR CODE HERE
+      int len2 = 0;
+    char *p2 = str_2;
+    while (*p2 != '\0')
+    {
+        p2 += 1;
+        len2 += 1;
+    }
+    cout <<"len2:"<<len2<<endl;
+    int len1 = 0;       
+    char *p = str_1;
+    while (*p != '\0')
+    {
+        p += 1;
+        len1 += 1;
+    }
+    cout <<"len1:"<<len1<<endl;
+
+    char newchar[len1+len2];
+    for (int i = 0; i < len1; i++)
+    {
+        newchar[i] = str_1[i];
+        
+    }
+    for (int j = 0; j < len2 + 1; j++)
+    {
+        if (j <= len2)
+        {
+            newchar[len1+j] = str_2[j];
+        }
+        if (j == len2 + 1)
+        {
+            newchar[len1+len2] = '\0';
+        }
+        
+        
+    }
+    for (int k = 0; k < len1+len2; k++)
+    {
+        std::cout << newchar[k];
+    }
+    cout <<endl;
+
 }
+    
+
+
 
 
 // 练习3，实现库函数strstr
@@ -31,8 +89,59 @@ char* my_strstr(char *s, char *p) {
      */
 
     // IMPLEMENT YOUR CODE HERE
+    int len_p = 0;
+    char *length_p = p;
+    while (*length_p != '\0')
+    {
+        length_p += 1;
+        len_p += 1;
+    }
+
+    int len_s = 0;
+    char *length_s = s;             //得到s,p的长度
+    while (*length_s != '\0')
+    {
+        length_s += 1;
+        len_s += 1;
+    }
+    if (len_p == 0)
+    {
+        return &s[0];
+    }
+    if (len_s == 0)
+    {
+        return 0;
+    }
+    
+    char *p1 = s;
+    
+    for (int i = 0;i < len_s;i++)//遍历s去找p
+    {    //这里的i也是s里的下标
+        if (s[i] == p[0])//逐个核对后面的对不对
+        {   
+            
+            p1 = &s[i];
+            for (int j = 0; j < len_p; j++)             
+            {
+                if (s[i+j] != p[j])
+                {
+                    break;
+                }
+                if (j == len_p -1)
+                {
+                    return &s[i];
+                }
+                
+            }
+            
+        }
+        
+    }
+  
     return 0;
 }
+
+
 
 
 /**
@@ -97,6 +206,14 @@ void rgb2gray(float *in, float *out, int h, int w) {
 
     // IMPLEMENT YOUR CODE HERE
     // ...
+    int j = 0;
+    for (int i = 0; i < h * w * 3 ; i+=3,j++)
+    {
+            float V = 0.1140 * in[i+2]  + 0.5870 * in[i+1] + 0.2989 * in[i];
+            out[j] = V;
+    }
+    
+    
 }
 
 // 练习5，实现图像处理算法 resize：缩小或放大图像
@@ -198,9 +315,83 @@ void resize(float *in, float *out, int h, int w, int c, float scale) {
 
     int new_h = h * scale, new_w = w * scale;
     // IMPLEMENT YOUR CODE HERE
+    //从目标图倒推原图
+    for (int y = 0; y < new_h; y++)
+    {
+        for (int x = 0; x < new_w; x++)
+        {
+            //原图中
+            float x0 = x / scale;
+            float y0 = y / scale;
+            //强行截断找邻居
+            //这是第一个邻居                          //  1  2
+            int x1 = static_cast<int>(x0);          //   3  4
+            int y1 = static_cast<int>(y0);//（y1行，x1列）
+            //找第二个邻居
+            int x2 = x1 + 1;
+            int y2 = y1;//（y2行，x2列）
+            //第三个
+            int x3 = x1;
+            int y3 = y1 + 1;//（y3行，x3列）
+            //第四个
+            int x4 = x2;
+            int y4 = y3;//（y4行，x4列）
+            if (x4 > w) x2 = w;
+            if (y4 > h) y4 = h;
+   
+            //计算用到的距离差值
+            float dx = x0 - x1;
+            float dy = y0 - y1;            //进行加权插值
+            if ((x1 >= 0)&&(y1 >= 0)&&(x2 <= w)&&(y3 <= h))
+            {
+                //允许插值
+                for (int k = 0; k < c; k++)
+                {
+                    float nei1 = in[(y1*w+x1)*c+k];
+                    float nei2 = in[(y2*w+x2)*c+k];
+                    float nei3 = in[(y3*w+x3)*c+k];
+                    float nei4 = in[(y4*w+x4)*c+k];
 
+                    float bott = nei3*(1-dx)+nei4*dx;
+                    float up = nei1*(1-dx)+nei2*dx;
+                    float final = up *(1-dy)+bott*dy;
+
+                    out[(y*new_w+x)*c+k] = final;
+                }
+                
+                
+            }
+            
+
+
+        }
+        
+    }
+    
 }
 
+
+
+//是第6题的东西
+    double myadd(int goal,double *in)
+    {   double val = 0;
+        for (int i = 0; i <= goal; i++)
+        {
+            val += in[i];
+        }
+        return val;
+    }
+    int myblur(double in){
+        // if (in - static_cast<int>(in) < 0.5)
+        // {
+        //     return static_cast<int>(in);
+        // }
+        // else if (in - static_cast<int>(in) >= 0.5)
+        // {
+        //     return static_cast<int>(in)+1;
+        // }
+        return (in - static_cast<int>(in) < 0.5)? static_cast<int>(in):static_cast<int>(in)+1;
+    }
 
 // 练习6，实现图像处理算法：直方图均衡化
 void hist_eq(float *in, int h, int w) {
@@ -221,4 +412,41 @@ void hist_eq(float *in, int h, int w) {
      */
 
     // IMPLEMENT YOUR CODE HERE
+    //总像素
+    const int total = h * w;
+    //计算原始灰度
+    int counter = 0;//用来装筛出来的个数
+    double couple[256] = {0};
+    double couple2[256] = {0};
+    for (int j = 0; j < total; j++)//全部遍历一遍像素
+    {
+        double val = in[j];
+        couple[(int)val] += 1;
+       
+    }
+    //计算这种灰度像素的分布频率方便后续处理
+    for (int i = 0; i <= 255; i++)
+    {
+        couple[i] = couple[i] / total;
+    }
+    
+    //再写一个循环把rate阶梯累加
+    couple2[0] = couple[0];
+    for (int k = 1; k < 256; k++)
+    {
+        couple2[k] =couple2[k-1] + couple[k];
+    }
+
+    //再写一个循环算权重
+    int weigh[256] = {0};
+    for (int i = 0; i <= 255; i++)
+    {
+        weigh[i] = myblur(couple2[i] * 255);
+    }
+    
+    //写一个循环依灰度次序修改   
+    for (int j = 0; j < total; j++)//在图中挨个遍历,但是只走一遍
+    {
+        in[j] = weigh[(int)in[j]];
+    }
 }

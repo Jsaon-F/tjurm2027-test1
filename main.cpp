@@ -1,5 +1,5 @@
-#include "utils.h"
-#include "tests.h"
+#include "include/utils.h"
+#include "include/tests.h"
 #include <iostream>
 #include <cstring>
 
@@ -7,14 +7,14 @@
 
 
 void test_rgb2gray() {
-    std::cout << "å¼€å§‹æµ‹è¯•å‡½æ•° << rgb2gray >> ..." << std::endl;
+    std::cout << "¿ªÊ¼²âÊÔº¯Êý << rgb2gray >> ..." << std::endl;
     char *path = "../images/rgb2gray/input.jpg";
     float *img;
     int h, w, c;
 
     imread(path, &img, &h, &w, &c);
-    std::cout << "è¯»å–å›¾ç‰‡images/rgb2gray/input.jpgï¼Œé«˜åº¦ä¸º" << h << "ï¼Œé«˜åº¦ä¸º" << w
-              << "ï¼Œé€šé“æ•°ä¸º" << c
+    std::cout << "¶ÁÈ¡Í¼Æ¬images/rgb2gray/input.jpg£¬¸ß¶ÈÎª" << h << "£¬¸ß¶ÈÎª" << w
+              << "£¬Í¨µÀÊýÎª" << c
               << std::endl;
 
     float *gray = fmalloc(h * w);
@@ -22,9 +22,9 @@ void test_rgb2gray() {
 
     char *out_path = "../images/rgb2gray/output.jpg";
     imwrite(out_path, gray, h, w, 1);
-    std::cout << "ä½¿ç”¨ä½ çš„ä»£ç äº§ç”Ÿçš„ç°åº¦å›¾ç‰‡å·²ç»ä¿å­˜ä¸ºimages/rgb2gray/output.jpg"
+    std::cout << "Ê¹ÓÃÄãµÄ´úÂë²úÉúµÄ»Ò¶ÈÍ¼Æ¬ÒÑ¾­±£´æÎªimages/rgb2gray/output.jpg"
               << std::endl
-              << "å¯ä»¥ä¸Žimages/rgb2gray/answer.jpgè¿›è¡Œæ¯”è¾ƒï¼Œçœ‹ç»“æžœæ˜¯å¦æ­£ç¡®"
+              << "¿ÉÒÔÓëimages/rgb2gray/answer.jpg½øÐÐ±È½Ï£¬¿´½á¹ûÊÇ·ñÕýÈ·"
               << std::endl;
 
     free(gray), free(img);
@@ -32,7 +32,7 @@ void test_rgb2gray() {
 }
 
 void test_strlen() {
-    std::cout << "å¼€å§‹æµ‹è¯•å‡½æ•° << my_strlen >> ..." << std::endl;
+    std::cout << "¿ªÊ¼²âÊÔº¯Êý << my_strlen >> ..." << std::endl;
     char *strs[] = {
         "123456", "", "hello world!"
     };
@@ -40,22 +40,22 @@ void test_strlen() {
     bool pass = true;
     for (int i = 0; i < 3; i++)
         if (strlen(strs[i]) != my_strlen(strs[i])) {
-            std::cout << "æœªé€šè¿‡ï¼Œé”™è¯¯çš„è¾“å…¥ä¸º" << strs[i] << std::endl;
+            std::cout << "Î´Í¨¹ý£¬´íÎóµÄÊäÈëÎª" << strs[i] << std::endl;
             pass = false;
             break;
         }
 
     if (pass) {
-        std::cout << "é€šè¿‡" << std::endl;
+        std::cout << "Í¨¹ý" << std::endl;
     }
     std::cout << std::endl << std::endl;
 }
 
 void test_strcat() {
-    std::cout << "å¼€å§‹æµ‹è¯•å‡½æ•° << my_strcat >> ..." << std::endl;
+    std::cout << "¿ªÊ¼²âÊÔº¯Êý << my_strcat >> ..." << std::endl;
 
     int n = 2000;
-    // æ¥æºï¼šç”µå½±ã€Šç»¿çš®ä¹¦ã€‹
+    // À´Ô´£ºµçÓ°¡¶ÂÌÆ¤Êé¡·
     char str1[n] =
     "Dear Dolores\n"
     "When I think of you, I'm reminded of the beautiful plains of Iowa. The distance \n"
@@ -74,15 +74,15 @@ void test_strcat() {
     my_strcat(str1_tmp, str2_tmp);
 
     if (!strcmp(str1, str1_tmp)) {
-        std::cout << "é€šè¿‡" << std::endl;
+        std::cout << "Í¨¹ý" << std::endl;
     } else {
-        std::cout << "æœªé€šè¿‡" << std::endl;
+        std::cout << "Î´Í¨¹ý" << std::endl;
     }
     std::cout << std::endl << std::endl;
 }
 
 void test_strstr() {
-    std::cout << "å¼€å§‹æµ‹è¯•å‡½æ•° << my_strstr >> ..." << std::endl;
+    std::cout << "¿ªÊ¼²âÊÔº¯Êý << my_strstr >> ..." << std::endl;
 
     char *s = "jaldjqionekqnwjsfjdviozdfaier234WDAJdlDAKDie3j";
     char *p[] = {"wjsfjdvioz", "qqqqq",  "j"};
@@ -90,35 +90,35 @@ void test_strstr() {
     bool pass = true;
     for (int i = 0; i < 3; i++)
         if (strstr(s, p[i]) != my_strstr(s, p[i])) {
-            std::cout << "æœªé€šè¿‡ï¼Œé”™è¯¯çš„å­ä¸²ä¸º" << p[i] << std::endl;
+            std::cout << "Î´Í¨¹ý£¬´íÎóµÄ×Ó´®Îª" << p[i] << std::endl;
             pass = false;
             break;
         }
 
     if (pass) {
-        std::cout << "é€šè¿‡" << std::endl;
+        std::cout << "Í¨¹ý" << std::endl;
     }
     std::cout << std::endl << std::endl;
 }
 
 void test_hist_eq() {
-    std::cout << "å¼€å§‹æµ‹è¯•å‡½æ•° << hist_eq >> ..." << std::endl;
+    std::cout << "¿ªÊ¼²âÊÔº¯Êý << hist_eq >> ..." << std::endl;
     char *path = "../images/hist_eq/input.jpg";
     float *img;
     int h, w, c;
 
     imread(path, &img, &h, &w, &c);
-    std::cout << "è¯»å–å›¾ç‰‡images/hist_eq/input.jpgï¼Œé«˜åº¦ä¸º" << h << "ï¼Œé«˜åº¦ä¸º" << w
-              << "ï¼Œé€šé“æ•°ä¸º" << c
+    std::cout << "¶ÁÈ¡Í¼Æ¬images/hist_eq/input.jpg£¬¸ß¶ÈÎª" << h << "£¬¸ß¶ÈÎª" << w
+              << "£¬Í¨µÀÊýÎª" << c
               << std::endl;
 
     hist_eq(img, h, w);
 
     char *out_path = "../images/hist_eq/output.jpg";
     imwrite(out_path, img, h, w, 1);
-    std::cout << "ä½¿ç”¨ä½ çš„ä»£ç äº§ç”Ÿçš„ç»“æžœå·²ç»ä¿å­˜ä¸ºimages/hist_eq/output.jpg"
+    std::cout << "Ê¹ÓÃÄãµÄ´úÂë²úÉúµÄ½á¹ûÒÑ¾­±£´æÎªimages/hist_eq/output.jpg"
               << std::endl
-              << "å¯ä»¥ä¸Žimages/hist_eq/answer.jpgè¿›è¡Œæ¯”è¾ƒï¼Œçœ‹ç»“æžœæ˜¯å¦æ­£ç¡®"
+              << "¿ÉÒÔÓëimages/hist_eq/answer.jpg½øÐÐ±È½Ï£¬¿´½á¹ûÊÇ·ñÕýÈ·"
               << std::endl;
 
     free(img);
@@ -132,14 +132,14 @@ void test_resize() {
     int h, w, c;
 
     imread(path, &img, &h, &w, &c);
-    std::cout << "è¯»å–å›¾ç‰‡images/resize/input.jpgï¼Œé«˜åº¦ä¸º" << h << "ï¼Œé«˜åº¦ä¸º" << w
+    std::cout << "¶ÁÈ¡Í¼Æ¬images/resize/input.jpg£¬¸ß¶ÈÎª" << h << "£¬¸ß¶ÈÎª" << w
               << std::endl;
 
     float scales[2] = {2.0 / 3, 2};
     for (int i = 0; i < 2; i++) {
         float scale = scales[i];
         int new_w = w * scale, new_h = h * scale;
-        std::cout << "å°†å›¾ç‰‡ resize ä¸ºåŽŸæ¥çš„" << scale << "å€ï¼Œå³" << new_h << ", " << new_w
+        std::cout << "½«Í¼Æ¬ resize ÎªÔ­À´µÄ" << scale << "±¶£¬¼´" << new_h << ", " << new_w
                 << std::endl;
         float *resized = fmalloc(new_h * new_w * c);
         resize(img, resized, h, w, c, scale);
@@ -147,7 +147,7 @@ void test_resize() {
         char out_path[] = "../images/resize/output .jpg";
         out_path[23] = '0' + i;
         imwrite(out_path, resized, new_h, new_w, c);
-        std::cout << "ä½¿ç”¨ä½ çš„ä»£ç äº§ç”Ÿçš„å›¾ç‰‡å·²ç»ä¿å­˜ä¸º"
+        std::cout << "Ê¹ÓÃÄãµÄ´úÂë²úÉúµÄÍ¼Æ¬ÒÑ¾­±£´æÎª"
                   << out_path << std::endl;
 
         free(resized);
@@ -156,17 +156,17 @@ void test_resize() {
 }
 
 int main() {
-    std::cout << "å¼€å§‹æµ‹è¯•å‡½æ•° << my_strlen >> ..." << std::endl;
-    test_strlen();
-    std::cout << "å¼€å§‹æµ‹è¯•å‡½æ•° << my_strcat >> ..." << std::endl;
-    test_strcat();
-    std::cout << "å¼€å§‹æµ‹è¯•å‡½æ•° << my_strstr >> ..." << std::endl;
-    test_strstr();
-    std::cout << "å¼€å§‹æµ‹è¯•å‡½æ•° << rgb2gray >> ..." << std::endl;
-    test_rgb2gray();
-    std::cout << "å¼€å§‹æµ‹è¯•å‡½æ•° << resize >> ..." << std::endl;
+    // std::cout << "¿ªÊ¼²âÊÔº¯Êý << my_strlen >> ..." << std::endl;
+    // test_strlen();
+    // std::cout << "¿ªÊ¼²âÊÔº¯Êý << my_strcat >> ..." << std::endl;
+    // test_strcat();
+    // std::cout << "¿ªÊ¼²âÊÔº¯Êý << my_strstr >> ..." << std::endl;
+    // test_strstr();
+    // std::cout << "¿ªÊ¼²âÊÔº¯Êý << rgb2gray >> ..." << std::endl;
+    // test_rgb2gray();
+    std::cout << "¿ªÊ¼²âÊÔº¯Êý << resize >> ..." << std::endl;
     test_resize();
-    std::cout << "å¼€å§‹æµ‹è¯•å‡½æ•° << hist_eq >> ..." << std::endl;
-    test_hist_eq();
+    // std::cout << "¿ªÊ¼²âÊÔº¯Êý << hist_eq >> ..." << std::endl;
+    // test_hist_eq();
     return 0;
 }
