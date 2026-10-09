@@ -13,7 +13,7 @@ void test_rgb2gray() {
     int h, w, c;
 
     imread(path, &img, &h, &w, &c);
-    std::cout << "读取图片images/rgb2gray/input.jpg，高度为" << h << "，高度为" << w
+    std::cout << "读取图片images/rgb2gray/input.jpg,高度为" << h << "，高度为" << w
               << "，通道数为" << c
               << std::endl;
 
@@ -24,7 +24,7 @@ void test_rgb2gray() {
     imwrite(out_path, gray, h, w, 1);
     std::cout << "使用你的代码产生的灰度图片已经保存为images/rgb2gray/output.jpg"
               << std::endl
-              << "可以与images/rgb2gray/answer.jpg进行比较，看结果是否正确"
+              << "可以与images/rgb2gray/answer.jpg进行比较,看结果是否正确"
               << std::endl;
 
     free(gray), free(img);
@@ -40,7 +40,7 @@ void test_strlen() {
     bool pass = true;
     for (int i = 0; i < 3; i++)
         if (strlen(strs[i]) != my_strlen(strs[i])) {
-            std::cout << "未通过，错误的输入为" << strs[i] << std::endl;
+            std::cout << "未通过,错误的输入为" << strs[i] << std::endl;
             pass = false;
             break;
         }
@@ -54,7 +54,7 @@ void test_strlen() {
 void test_strcat() {
     std::cout << "开始测试函数 << my_strcat >> ..." << std::endl;
 
-    int n = 2000;
+    const int n = 2000;
     // 来源：电影《绿皮书》
     char str1[n] =
     "Dear Dolores\n"
@@ -90,7 +90,7 @@ void test_strstr() {
     bool pass = true;
     for (int i = 0; i < 3; i++)
         if (strstr(s, p[i]) != my_strstr(s, p[i])) {
-            std::cout << "未通过，错误的子串为" << p[i] << std::endl;
+            std::cout << "未通过,错误的子串为" << p[i] << std::endl;
             pass = false;
             break;
         }
@@ -108,7 +108,7 @@ void test_hist_eq() {
     int h, w, c;
 
     imread(path, &img, &h, &w, &c);
-    std::cout << "读取图片images/hist_eq/input.jpg，高度为" << h << "，高度为" << w
+    std::cout << "读取图片images/hist_eq/input.jpg,高度为" << h << "，高度为" << w
               << "，通道数为" << c
               << std::endl;
 
@@ -118,7 +118,7 @@ void test_hist_eq() {
     imwrite(out_path, img, h, w, 1);
     std::cout << "使用你的代码产生的结果已经保存为images/hist_eq/output.jpg"
               << std::endl
-              << "可以与images/hist_eq/answer.jpg进行比较，看结果是否正确"
+              << "可以与images/hist_eq/answer.jpg进行比较,看结果是否正确"
               << std::endl;
 
     free(img);
@@ -132,19 +132,19 @@ void test_resize() {
     int h, w, c;
 
     imread(path, &img, &h, &w, &c);
-    std::cout << "读取图片images/resize/input.jpg，高度为" << h << "，高度为" << w
+    std::cout << "读取图片images/resize/input.jpg,高度为" << h << "，高度为" << w
               << std::endl;
 
     float scales[2] = {2.0 / 3, 2};
     for (int i = 0; i < 2; i++) {
         float scale = scales[i];
         int new_w = w * scale, new_h = h * scale;
-        std::cout << "将图片 resize 为原来的" << scale << "倍，即" << new_h << ", " << new_w
+        std::cout << "将图片 resize 为原来的" << scale << "倍,即" << new_h << ", " << new_w
                 << std::endl;
         float *resized = fmalloc(new_h * new_w * c);
         resize(img, resized, h, w, c, scale);
 
-        char out_path[] = "../images/resize/output .jpg";
+        char out_path[] = "../images/resize/output.jpg";
         out_path[23] = '0' + i;
         imwrite(out_path, resized, new_h, new_w, c);
         std::cout << "使用你的代码产生的图片已经保存为"
@@ -156,17 +156,17 @@ void test_resize() {
 }
 
 int main() {
-    // std::cout << "开始测试函数 << my_strlen >> ..." << std::endl;
-    // test_strlen();
-    // std::cout << "开始测试函数 << my_strcat >> ..." << std::endl;
-    // test_strcat();
-    // std::cout << "开始测试函数 << my_strstr >> ..." << std::endl;
-    // test_strstr();
-    // std::cout << "开始测试函数 << rgb2gray >> ..." << std::endl;
-    // test_rgb2gray();
+    std::cout << "开始测试函数 << my_strlen >> ..." << std::endl;
+    test_strlen();
+    std::cout << "开始测试函数 << my_strcat >> ..." << std::endl;
+    test_strcat();
+    std::cout << "开始测试函数 << my_strstr >> ..." << std::endl;
+    test_strstr();
+    std::cout << "开始测试函数 << rgb2gray >> ..." << std::endl;
+    test_rgb2gray();
     std::cout << "开始测试函数 << resize >> ..." << std::endl;
     test_resize();
-    // std::cout << "开始测试函数 << hist_eq >> ..." << std::endl;
-    // test_hist_eq();
+    std::cout << "开始测试函数 << hist_eq >> ..." << std::endl;
+    test_hist_eq();
     return 0;
 }
